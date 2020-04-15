@@ -1,0 +1,10 @@
+class Colors:
+    HEADER = '\033[95m'
+    BLACK = '\033[1;30m'
+    BLUE = '\033[1;34m'
+    GREEN = '\033[1;32m'
+    WARNING = '\033[1;41m'
+    YELLOW = '\033[1;33m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'

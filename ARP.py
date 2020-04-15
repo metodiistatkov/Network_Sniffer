@@ -14,7 +14,7 @@ class ARPPacket:
         self.dest_hardware: int = dest_hardware
         self.dest_protocol: int = dest_protocol
 
-
+# provide your default gateway details here
 DEFAULT_GATEWAY: dict = {'192.168.1.1': '60:A4:4C:85:35:5B'}
 # gui message related
 root = Tk()

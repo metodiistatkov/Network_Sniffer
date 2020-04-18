@@ -5,6 +5,7 @@ from ColorPrinting import Colors
 import warnings
 from tkinter import messagebox
 from tkinter import Tk
+import netifaces
 
 
 class ARPPacket:
@@ -14,8 +15,19 @@ class ARPPacket:
         self.dest_hardware: int = dest_hardware
         self.dest_protocol: int = dest_protocol
 
+
+def def_gw_IP() -> str:
+    gws = netifaces.gateways()
+    return gws['default'][netifaces.AF_INET][0]
+
+
+def def_gw_MAC() -> str:
+    addrs = netifaces.ifaddresses('wlp4s0')
+    return addrs[netifaces.AF_LINK][0].get('addr')
+
+
 # provide your default gateway details here
-DEFAULT_GATEWAY: dict = {'192.168.1.1': '60:A4:4C:85:35:5B'}
+DEFAULT_GATEWAY: dict = {def_gw_IP(): def_gw_MAC()}
 # gui message related
 root = Tk()
 

@@ -6,7 +6,7 @@ import warnings
 from tkinter import messagebox
 from tkinter import Tk
 import netifaces
-
+import subprocess
 
 class ARPPacket:
     def __init__(self, src_hardware: int, src_protocol: int, dest_hardware: int, dest_protocol: int):
@@ -17,13 +17,20 @@ class ARPPacket:
 
 
 def def_gw_IP() -> str:
-    gws = netifaces.gateways()
+    gws: str = netifaces.gateways()
     return gws['default'][netifaces.AF_INET][0]
 
 
 def def_gw_MAC() -> str:
-    addrs = netifaces.ifaddresses('wlp4s0')
-    return addrs[netifaces.AF_LINK][0].get('addr')
+    addrs: str = subprocess.check_output(['arp', '-a']).decode('utf-8')
+    list_arp: list = addrs.splitlines()
+    gw_mac: str
+
+    for line in list_arp:
+        if '_gateway' in line:
+          gw_mac = line.split()[3]
+
+    return gw_mac.upper()
 
 
 # provide your default gateway details here

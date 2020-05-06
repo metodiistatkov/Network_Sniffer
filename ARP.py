@@ -40,10 +40,10 @@ root = Tk()
 
 
 def arp_spoofing_check(arp_packet: ARPPacket) -> None:
-    dg_IP: str = list(DEFAULT_GATEWAY.keys())[0]
-    dg_MAC: str = list(DEFAULT_GATEWAY.values())[0]
-    if arp_packet.src_protocol == dg_IP:
-        if arp_packet.src_hardware != dg_MAC:
+    dg_ip: str = list(DEFAULT_GATEWAY.keys())[0]
+    dg_mac: str = list(DEFAULT_GATEWAY.values())[0]
+    if arp_packet.src_protocol == dg_ip:
+        if arp_packet.src_hardware != dg_mac:
             print(f"{Colors.WARNING}*****Two different MAC address entries for Default Gateway! Possible ARP spoofing "
                   f"attack!*****{Colors.ENDC}")
             # display pop up message
@@ -51,8 +51,8 @@ def arp_spoofing_check(arp_packet: ARPPacket) -> None:
                                    'Two different MAC address entries for Default Gateway! Possible ARP spoofing '
                                    'attack!\nMAC address of the possible attacker: %s' % arp_packet.src_hardware)
             # root.destroy()
-    elif arp_packet.dest_protocol == dg_IP:
-        if arp_packet.dest_hardware != dg_MAC:
+    elif arp_packet.dest_protocol == dg_ip:
+        if arp_packet.dest_hardware != dg_mac:
             print(f"{Colors.WARNING}*****Two different MAC address entries for Default Gateway! Possible ARP spoofing "
                   f"attack!*****{Colors.ENDC}")
             messagebox.showwarning('ARP Spoofing',

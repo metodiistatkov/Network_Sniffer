@@ -20,6 +20,28 @@ import sys
 from ColorPrinting import Colors
 
 
+def get_icmp_info(ipv4_packet: IPv4Packet) -> None:
+    icmp_packet: ICMPPacket = unpack_icmp_packet(ipv4_packet.data)
+    print_icmp_packet(icmp_packet)
+
+
+def get_tcp_info(ipv4_packet: IPv4Packet) -> None:
+    tcp_packet: TCPPacket = unpack_tcp_packet(ipv4_packet.data)
+    print_tcp_packet(tcp_packet)
+    # if there is html data display it
+    if len(tcp_packet.data) > 0:
+        print_http_data(tcp_packet.data)
+
+
+def get_udp_info(ipv4_packet: IPv4Packet) -> None:
+    udp_packet: UDPPacket = unpack_udp_packet(ipv4_packet.data)
+    print_udp_packet(udp_packet)
+    if udp_packet.src_port == 53 or udp_packet.dest_port == 53:
+        print('\nDNS FRAME\n')
+        dns_record = DNSRecord.parse(udp_packet.data)
+        print(dns_record)
+
+
 def sniff_IPv4(ethernet_packet: EthernetPacket) -> None:
     ipv4_packet: IPv4Packet = unpack_ipv4_packet(ethernet_packet.data)
     print_ethernet_frame_header_info(ethernet_packet, 'IPv4')
@@ -28,22 +50,13 @@ def sniff_IPv4(ethernet_packet: EthernetPacket) -> None:
                              ipv4_packet.src, ipv4_packet.dest)
 
     if ipv4_packet.protocol == 1:
-        icmp_packet: ICMPPacket = unpack_icmp_packet(ipv4_packet.data)
-        print_icmp_packet(icmp_packet)
+        get_icmp_info(ipv4_packet)
 
     elif ipv4_packet.protocol == 6:
-        tcp_packet: TCPPacket = unpack_tcp_packet(ipv4_packet.data)
-        print_tcp_packet(tcp_packet)
-        if len(tcp_packet.data) > 0:
-            print_http_data(tcp_packet.data)
+        get_tcp_info(ipv4_packet)
 
     elif ipv4_packet.protocol == 17:
-        udp_packet: UDPPacket = unpack_udp_packet(ipv4_packet.data)
-        print_udp_packet(udp_packet)
-        if udp_packet.src_port == 53 or udp_packet.dest_port == 53:
-            print('\nDNS FRAME\n')
-            dns_record = DNSRecord.parse(udp_packet.data)
-            print(dns_record)
+        get_udp_info(ipv4_packet)
 
 
 def sniff_ARP(ethernet_packet: EthernetPacket) -> None:

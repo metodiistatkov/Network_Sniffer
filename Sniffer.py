@@ -33,13 +33,17 @@ def get_tcp_info(ipv4_packet: IPv4Packet) -> None:
         print_http_data(tcp_packet.data)
 
 
+def get_dns_info(udp_packet: UDPPacket) -> None:
+    print('\nDNS FRAME\n')
+    dns_record = DNSRecord.parse(udp_packet.data)
+    print(dns_record)
+
+
 def get_udp_info(ipv4_packet: IPv4Packet) -> None:
     udp_packet: UDPPacket = unpack_udp_packet(ipv4_packet.data)
     print_udp_packet(udp_packet)
     if udp_packet.src_port == 53 or udp_packet.dest_port == 53:
-        print('\nDNS FRAME\n')
-        dns_record = DNSRecord.parse(udp_packet.data)
-        print(dns_record)
+        get_dns_info(udp_packet)
 
 
 def sniff_IPv4(ethernet_packet: EthernetPacket) -> None:

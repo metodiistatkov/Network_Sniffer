@@ -8,6 +8,7 @@ from tkinter import Tk
 import netifaces
 import subprocess
 
+
 class ARPPacket:
     def __init__(self, src_hardware: int, src_protocol: int, dest_hardware: int, dest_protocol: int):
         self.src_hardware: int = src_hardware
@@ -28,7 +29,7 @@ def def_gw_MAC() -> str:
 
     for line in list_arp:
         if '_gateway' in line:
-          gw_mac = line.split()[3]
+            gw_mac = line.split()[3]
 
     return gw_mac.upper()
 
@@ -50,7 +51,8 @@ def arp_spoofing_check(arp_packet: ARPPacket) -> None:
             messagebox.showwarning('ARP Spoofing',
                                    'Two different MAC address entries for Default Gateway! Possible ARP spoofing '
                                    'attack!\nMAC address of the possible attacker: %s' % arp_packet.src_hardware)
-            # root.destroy()
+            root.update()
+
     elif arp_packet.dest_protocol == dg_ip:
         if arp_packet.dest_hardware != dg_mac:
             print(f"{Colors.WARNING}*****Two different MAC address entries for Default Gateway! Possible ARP spoofing "
@@ -58,6 +60,7 @@ def arp_spoofing_check(arp_packet: ARPPacket) -> None:
             messagebox.showwarning('ARP Spoofing',
                                    'Two different MAC address entries for Default Gateway! Possible ARP spoofing '
                                    'attack!\nMAC address of the possible attacker: %s' % arp_packet.src_hardware)
+            root.update()
 
 
 def unpack_arp_packet(ethernet_data: bytes) -> ARPPacket:

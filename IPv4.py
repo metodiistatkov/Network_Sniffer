@@ -37,7 +37,7 @@ def check_IP(ip: str, tor_ips: set) -> None:
         # TODO: add gui POP up
         print(f"{Colors.WARNING}*****TOR Traffic Detected!*****{Colors.ENDC}")
 
-
+# Create a set with TOR exit nodes IP addresses
 tor_ips: set = set_TOR_IPs('TOR_IPs.txt')
 
 

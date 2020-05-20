@@ -75,7 +75,7 @@ pluggy==0.13.1
 powerline-status==2.7
 pre-commit==1.21.0
 protobuf==3.6.1
-psutil==5.5.1
+psutil==5.6.6
 py==1.8.1
 pycairo==1.16.2
 pycrypto==2.6.1

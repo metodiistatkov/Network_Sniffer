@@ -13,6 +13,6 @@ protobuf == 3.6.1
 pyOpenSSL == 19.0.0
 python-ntlm == 1.1.0
 python-ntlm-fixed == 1.0
-pywin32 == 227
+pywin32 == 301
 win32compat == 221.26
 win32ext == 221.2

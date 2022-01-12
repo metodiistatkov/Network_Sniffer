@@ -1,6 +1,6 @@
 cryptography == 3.3.2
 datrie == 0.8.2
-dnslib == 0.9.12
+dnslib == 0.9.17
 future == 0.18.2
 genshi == 0.7.3
 hid-converge == 2.0.1.1

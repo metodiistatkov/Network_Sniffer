@@ -9,7 +9,7 @@ httpsproxy-urllib2 == 1.0
 import-java == 0.6
 lxml == 4.6.5
 netifaces == 0.10.4
-protobuf == 3.6.1
+protobuf == 3.15.0
 pyOpenSSL == 19.0.0
 python-ntlm == 1.1.0
 python-ntlm-fixed == 1.0
